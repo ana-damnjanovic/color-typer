@@ -12,8 +12,23 @@ public enum gameState {
 public class GameStateManager : MonoBehaviour
 {
     private gameState currentState;
-    public delegate void OnGameStateChanged(int newState);
-    public static event OnGameStateChanged onGameStateChanged;
+    public delegate void OnGameStateChangeHandler(int newState);
+    public static event OnGameStateChangeHandler OnGameStateChanged;
+
+    private static GameStateManager instance = null;
+
+    public static GameStateManager Instance
+    {
+        get
+        {
+            if (GameStateManager.instance == null)
+            {
+                GameStateManager.instance = new GameStateManager();
+            }
+            return GameStateManager.instance;
+        }
+
+    }
 
     void Awake()
     {
@@ -28,10 +43,15 @@ public class GameStateManager : MonoBehaviour
     public void SetState(int newState)
     {
         currentState = newState;
-        if (onGameStateChanged != null)
+        if (OnGameStateChanged != null)
         {
-            onGameStateChanged(newState);
+            OnGameStateChanged(newState);
         }
 
+    }
+
+    void OnApplicationQuit()
+    {
+        GameStateManager.instance = null;
     }
 }
