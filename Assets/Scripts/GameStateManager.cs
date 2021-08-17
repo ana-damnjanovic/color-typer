@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.MulticastDelegate;
 using UnityEngine;
 
 public enum gameState {
@@ -12,7 +11,7 @@ public enum gameState {
 public class GameStateManager : MonoBehaviour
 {
     private gameState currentState;
-    public delegate void OnGameStateChangeHandler(int newState);
+    public delegate void OnGameStateChangeHandler(gameState newState);
     public static event OnGameStateChangeHandler OnGameStateChanged;
 
     private static GameStateManager instance = null;
@@ -32,15 +31,15 @@ public class GameStateManager : MonoBehaviour
 
     void Awake()
     {
-        SetState(SETUP);
+        SetState(gameState.SETUP);
     }
 
-    public int GetState()
+    public gameState GetState()
     {
         return currentState;
     }
 
-    public void SetState(int newState)
+    public void SetState(gameState newState)
     {
         currentState = newState;
         if (OnGameStateChanged != null)
