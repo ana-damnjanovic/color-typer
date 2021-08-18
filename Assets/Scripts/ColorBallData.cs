@@ -14,20 +14,20 @@ public class ColorBallData
     [SerializeField]
     string color = "Red";
     [SerializeField]
-    float velocity = 5.0f;
+    float speed = 5.0f;
 
-    public string getColor()
+    public string GetColor()
     {
         return color;
     }
 
-    public float getVelocity()
+    public float GetSpeed()
     {
-        return velocity;
+        return speed;
     } 
 
-    public void setVelocity(float newVelocity)
+    public void SetSpeed(float newSpeed)
     {
-        velocity = newVelocity;
+        speed = newSpeed;
     }
 }

@@ -20,11 +20,12 @@ public class GameStateManager : MonoBehaviour
     {
         get
         {
-            if (GameStateManager.instance == null)
+            if (instance == null)
             {
-                GameStateManager.instance = new GameStateManager();
+                GameObject instanceObj = new GameObject();
+                instance = instanceObj.AddComponent<GameStateManager>();
             }
-            return GameStateManager.instance;
+            return instance;
         }
 
     }
