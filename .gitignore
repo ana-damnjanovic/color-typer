@@ -8,4 +8,6 @@
 
 .vs/
 
+[Aa]ssets/TextMesh*Pro/
+
 !/[Aa]ssets/**/*.meta
