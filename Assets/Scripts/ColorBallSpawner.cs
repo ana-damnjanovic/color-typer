@@ -8,8 +8,11 @@ public class ColorBallSpawner : MonoBehaviour
     JsonLoader jsonLoader = new JsonLoader();
     List<ColorBallData> colorBallData;
     List<Material> materials = new List<Material>();
+    List<GameObject> spawnedBalls = new List<GameObject>();
+
     Vector3 firingDirection;
     Vector3 launchOffset;
+
     float spawnCooldown = 2f;
     float timer;
 
@@ -26,7 +29,7 @@ public class ColorBallSpawner : MonoBehaviour
 
         firingDirection = (Camera.main.transform.position - this.transform.position).normalized;
         launchOffset = Vector3.up * 1.75f;
-        GameStateManager.Instance.SetState(gameState.RUN);
+        GameStateManager.OnGameStateChanged += HandleGameStateChange;
     }
 
     void Update()
@@ -43,6 +46,13 @@ public class ColorBallSpawner : MonoBehaviour
         }
     }
 
+    public void DestroyFrontBall() {
+        if (spawnedBalls.Count > 0)
+        {
+            spawnedBalls.RemoveAt(0);
+        }
+    }
+
     void SpawnRandomBall()
     {
         SpawnBallByIndex(Random.Range(0, colorBallData.Count));
@@ -51,7 +61,23 @@ public class ColorBallSpawner : MonoBehaviour
     void SpawnBallByIndex(int index)
     {
         GameObject ballInstance = Instantiate(ball, this.transform.position + launchOffset, Quaternion.identity);
-        ballInstance.GetComponent<Renderer>().material = materials[index];
+        Renderer renderer = ballInstance.GetComponent<Renderer>();
+        renderer.material = materials[index];
         ballInstance.GetComponent<Rigidbody>().velocity = firingDirection * colorBallData[index].GetSpeed();
+        spawnedBalls.Add(ballInstance);
+    }
+
+    void HandleGameStateChange(gameState newState)
+    {
+        if (newState == gameState.GAME_OVER)
+        {
+            if (spawnedBalls.Count > 0)
+            {
+                foreach (GameObject ball in spawnedBalls)
+                {
+                    Destroy(ball);
+                }
+            }
+        }
     }
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum gameState {
-    SETUP, // show starting menu and initiate 3 second countdown if the player starts the game
-    RUN, // gameplay
+    SETUP, // show main menu UI
+    RUN, // gameplay, show score UI and game buttons
     GAME_OVER, // show game over UI
 }
 
