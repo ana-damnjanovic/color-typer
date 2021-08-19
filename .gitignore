@@ -9,5 +9,6 @@
 .vs/
 
 [Aa]ssets/TextMesh*Pro/
+Assets/TextMesh Pro.meta
 
 !/[Aa]ssets/**/*.meta
