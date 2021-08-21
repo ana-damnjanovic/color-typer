@@ -48,10 +48,10 @@ public class ColorButtonManager : MonoBehaviour
             assigned = false;
             return;
         }
-        List<ColorBall> remainingColorBalls = colorBalls; // use the color balls to pick random button colors from
+        List<ColorBall> remainingColorBalls = new List<ColorBall>(colorBalls); // use the color balls to pick random button colors from
         int correctIndex = Random.Range(0, buttonBehaviours.Count);
         ColorButtonBehaviour correctButton = buttonBehaviours[correctIndex];
-        List<ColorButtonBehaviour> wrongButtons = buttonBehaviours;
+        List<ColorButtonBehaviour> wrongButtons = new List<ColorButtonBehaviour>(buttonBehaviours);
         wrongButtons.RemoveAt(correctIndex);
         correctButton.SetColor(frontBall.GetColor());
         correctButton.SetMaterial(frontBall.GetMaterial());

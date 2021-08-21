@@ -69,7 +69,7 @@ public class ColorBallManager : MonoBehaviour
 
     public List<ColorBall> GetPossibleColorBalls()
     {
-        return possibleColorBalls;
+        return new List<ColorBall>(possibleColorBalls);
     }
 
     void SpawnRandomBall()
