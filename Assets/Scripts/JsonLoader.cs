@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class JsonLoader
 {
-    public List<ColorBallData> LoadColorBallData()
+    public List<ColorBall> LoadColorBalls()
     {
+        List<ColorBall> colorBalls = new List<ColorBall>();
         TextAsset json = Resources.Load<TextAsset>("Data/BallData");
         ColorBallDataWrapper dataWrapper = JsonUtility.FromJson<ColorBallDataWrapper>(json.text);
-        return dataWrapper.dataset;
+        foreach (ColorBallData data in dataWrapper.dataset)
+        {
+            string colorPath = "Materials/Ball Materials/" + data.GetColor() + "Material";
+            Material material = Resources.Load(colorPath, typeof(Material)) as Material;
+            ColorBall colorBall = new ColorBall(data.GetColor(), data.GetInitialSpeed(), material);
+            colorBalls.Add(colorBall);
+        }
+        return colorBalls;
     }
 }

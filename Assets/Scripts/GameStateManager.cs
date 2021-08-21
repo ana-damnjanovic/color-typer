@@ -24,6 +24,7 @@ public class GameStateManager : MonoBehaviour
             {
                 GameObject instanceObj = new GameObject();
                 instance = instanceObj.AddComponent<GameStateManager>();
+                instanceObj.name = "GameStateManager";
             }
             return instance;
         }

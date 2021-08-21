@@ -14,20 +14,51 @@ public class ColorBallData
     [SerializeField]
     string color = "Red";
     [SerializeField]
-    float speed = 5.0f;
+    float initialSpeed = 5.0f;
 
     public string GetColor()
     {
         return color;
     }
 
+    public float GetInitialSpeed()
+    {
+        return initialSpeed;
+    }
+}
+
+public class ColorBall
+{
+    string color;
+    float speed;
+    Material material;
+
+    public ColorBall(string color, float speed, Material material)
+    {
+        this.color = color;
+        this.speed = speed;
+        this.material = material;
+    }
+
+    public string GetColor()
+    {
+        return this.color;
+    }
+
     public float GetSpeed()
     {
-        return speed;
-    } 
+        return this.speed;
+    }
+
+    public Material GetMaterial()
+    {
+        return this.material;
+    }
 
     public void SetSpeed(float newSpeed)
     {
-        speed = newSpeed;
+        this.speed = newSpeed;
     }
+
+
 }

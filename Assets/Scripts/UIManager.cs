@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     GameObject mainMenu;
     GameObject gameOverMenu;
     GameObject scoreDisplay;
-    GameObject gameButtons;
+    GameObject colorButtonUI;
 
     void Awake()
     {
@@ -22,6 +22,9 @@ public class UIManager : MonoBehaviour
         InstantiateUI("Prefabs/UI/GameOverMenu", out gameOverMenu);
         gameOverMenu.SetActive(false);
         InstantiateUI("Prefabs/UI/ScoreDisplay", out scoreDisplay);
+        scoreDisplay.SetActive(false);
+        InstantiateUI("Prefabs/UI/ColorButtonUI", out colorButtonUI);
+        colorButtonUI.SetActive(false);
 
         GameStateManager.OnGameStateChanged += HandleUIChange;
     }
@@ -40,12 +43,14 @@ public class UIManager : MonoBehaviour
             mainMenu.SetActive(false);
             gameOverMenu.SetActive(false);
             scoreDisplay.SetActive(true);
+            colorButtonUI.SetActive(true);
         }
         else if (newState == gameState.GAME_OVER)
         {
             mainMenu.SetActive(false);
             gameOverMenu.SetActive(true);
             scoreDisplay.SetActive(false);
+            colorButtonUI.SetActive(false);
         }
     }
 }
