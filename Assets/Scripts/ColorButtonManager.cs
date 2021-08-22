@@ -11,6 +11,7 @@ public class ColorButtonManager : MonoBehaviour
     void Awake()
     {
         ColorButtonBehaviour.OnColorButtonClick += HandleColorButtonClick;
+        GameStateManager.OnGameStateChanged += HandleGameStateChange;
         buttonBehaviours = new List<ColorButtonBehaviour>(transform.GetComponentsInChildren<ColorButtonBehaviour>());
     }
 
@@ -37,6 +38,14 @@ public class ColorButtonManager : MonoBehaviour
                 ColorBallManager.Instance.DestroyFrontBall();
                 assigned = false;
             }
+        }
+    }
+
+    void HandleGameStateChange(gameState newState)
+    {
+        if (newState == gameState.RUN)
+        {
+            assigned = false;
         }
     }
 

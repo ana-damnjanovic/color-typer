@@ -109,6 +109,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6734461923288780693}
+  - component: {fileID: 8131768754648602289}
+  - component: {fileID: 1149030211579892373}
   m_Layer: 0
   m_Name: ScoreDisplay
   m_TagString: Untagged
@@ -131,6 +133,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8131768754648602289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6734461923288780692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0761fbb7e48b34abeec17a0ba5cd3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1149030211579892373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6734461923288780692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8812350cff3f40c4d9f8fde11eb31e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6734461924287150661
 GameObject:
   m_ObjectHideFlags: 0

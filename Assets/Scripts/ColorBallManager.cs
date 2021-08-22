@@ -15,6 +15,12 @@ public class ColorBallManager : MonoBehaviour
     float spawnCooldown = 2f;
     float timer = 0f;
 
+    float defaultSpeed;
+    float speedMultiplier = 1.1f;
+
+    public delegate void OnBallDestroyedHandler();
+    public static OnBallDestroyedHandler OnBallDestroyed;
+
     private static ColorBallManager instance;
     public static ColorBallManager Instance
     {
@@ -28,10 +34,11 @@ public class ColorBallManager : MonoBehaviour
     {
         instance = this;
         ball = Resources.Load("Prefabs/Ball") as GameObject;
-        JsonLoader loader = new JsonLoader();
+        DataLoader loader = new DataLoader();
         possibleColorBalls = loader.LoadColorBalls();
-        firingDirection = (Camera.main.transform.position - this.transform.position).normalized;
-        launchOffset = Vector3.up * 1.75f;
+        defaultSpeed = possibleColorBalls[0].GetSpeed();
+        launchOffset = Vector3.up * 1.7f + Vector3.back * 0.25f;
+        firingDirection = (Camera.main.transform.position - (this.transform.position + launchOffset)).normalized;
         GameStateManager.OnGameStateChanged += HandleGameStateChange;
     }
 
@@ -61,15 +68,32 @@ public class ColorBallManager : MonoBehaviour
     public void DestroyFrontBall() {
         if (ballInstances.Count > 0 && spawnedColorBalls.Count > 0)
         {
+            IncreaseBallSpeed(spawnedColorBalls[0].GetColor());
             Destroy(ballInstances[0]);
             ballInstances.RemoveAt(0);
             spawnedColorBalls.RemoveAt(0);
+            if (OnBallDestroyed != null)
+            {
+                OnBallDestroyed();
+            }
         }
     }
 
     public List<ColorBall> GetPossibleColorBalls()
     {
         return new List<ColorBall>(possibleColorBalls);
+    }
+
+    void IncreaseBallSpeed(string color)
+    {
+        foreach (ColorBall ball in possibleColorBalls)
+        {
+            if (ball.GetColor() == color)
+            {
+                ball.SetSpeed(ball.GetSpeed() * speedMultiplier);
+                break;
+            }
+        }
     }
 
     void SpawnRandomBall()
@@ -79,6 +103,7 @@ public class ColorBallManager : MonoBehaviour
         Renderer renderer = ballInstance.GetComponent<Renderer>();
         renderer.material = possibleColorBalls[index].GetMaterial();
         ballInstance.GetComponent<Rigidbody>().velocity = firingDirection * possibleColorBalls[index].GetSpeed();
+        //ballInstance.GetComponent<Rigidbody>().AddForce(firingDirection * possibleColorBalls[index].GetSpeed() * 100);
         ballInstances.Add(ballInstance);
         spawnedColorBalls.Add(possibleColorBalls[index]);
     }
@@ -93,6 +118,15 @@ public class ColorBallManager : MonoBehaviour
                 {
                     Destroy(ball);
                 }
+                ballInstances.Clear();
+            }
+            if (spawnedColorBalls.Count > 0)
+            {
+                spawnedColorBalls.Clear();
+            }
+            foreach (ColorBall ball in possibleColorBalls)
+            {
+                ball.SetSpeed(defaultSpeed);
             }
         }
     }

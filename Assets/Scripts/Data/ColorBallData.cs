@@ -42,23 +42,21 @@ public class ColorBall
 
     public string GetColor()
     {
-        return this.color;
+        return color;
     }
 
     public float GetSpeed()
     {
-        return this.speed;
-    }
-
-    public Material GetMaterial()
-    {
-        return this.material;
+        return speed;
     }
 
     public void SetSpeed(float newSpeed)
     {
-        this.speed = newSpeed;
+        speed = newSpeed;
     }
 
-
+    public Material GetMaterial()
+    {
+        return material;
+    }
 }
