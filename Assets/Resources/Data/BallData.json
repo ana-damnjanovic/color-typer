@@ -2,22 +2,27 @@
   "dataset": [
     {
       "color": "Red",
+      "shape":  "Heart",
       "speed": 5.0
     },
     {
       "color": "Green",
+      "shape": "Triangle",
       "speed": 5.0
     },
     {
       "color": "Blue",
+      "shape": "Diamond",
       "speed": 5.0
     },
     {
       "color": "Yellow",
+      "shape":  "Star",
       "speed": 5.0
     },
     {
       "color": "Purple",
+      "shape": "Circle",
       "speed": 5.0
     }
   ]

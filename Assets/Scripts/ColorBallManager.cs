@@ -21,6 +21,8 @@ public class ColorBallManager : MonoBehaviour
     public delegate void OnBallDestroyedHandler();
     public static OnBallDestroyedHandler OnBallDestroyed;
 
+    DataLoader loader;
+
     private static ColorBallManager instance;
     public static ColorBallManager Instance
     {
@@ -34,12 +36,13 @@ public class ColorBallManager : MonoBehaviour
     {
         instance = this;
         ball = Resources.Load("Prefabs/Ball") as GameObject;
-        DataLoader loader = new DataLoader();
+        loader = new DataLoader();
         possibleColorBalls = loader.LoadColorBalls();
         defaultSpeed = possibleColorBalls[0].GetSpeed();
         launchOffset = Vector3.up * 1.7f + Vector3.back * 0.25f;
         firingDirection = (Camera.main.transform.position - (this.transform.position + launchOffset)).normalized;
         GameStateManager.OnGameStateChanged += HandleGameStateChange;
+        MainMenuManager.OnPlayerPrefChanged += ReloadBallData;
     }
 
     void Update()
@@ -84,6 +87,11 @@ public class ColorBallManager : MonoBehaviour
         return new List<ColorBall>(possibleColorBalls);
     }
 
+    void ReloadBallData()
+    {
+        possibleColorBalls = loader.LoadColorBalls();
+    }
+
     void IncreaseBallSpeed(string color)
     {
         foreach (ColorBall ball in possibleColorBalls)
@@ -101,9 +109,13 @@ public class ColorBallManager : MonoBehaviour
         int index = Random.Range(0, possibleColorBalls.Count);
         GameObject ballInstance = Instantiate(ball, this.transform.position + launchOffset, Quaternion.identity);
         Renderer renderer = ballInstance.GetComponent<Renderer>();
+        if (PlayerPrefs.GetInt("DisplayShapes", 0) == 1)
+        {
+            //ballInstance.transform.localScale *= 1.5f; //increase size a little for visibility
+            renderer = ballInstance.transform.GetChild(0).GetComponent<Renderer>();
+        }
         renderer.material = possibleColorBalls[index].GetMaterial();
         ballInstance.GetComponent<Rigidbody>().velocity = firingDirection * possibleColorBalls[index].GetSpeed();
-        //ballInstance.GetComponent<Rigidbody>().AddForce(firingDirection * possibleColorBalls[index].GetSpeed() * 100);
         ballInstances.Add(ballInstance);
         spawnedColorBalls.Add(possibleColorBalls[index]);
     }

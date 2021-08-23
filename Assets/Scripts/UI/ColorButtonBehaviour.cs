@@ -7,6 +7,7 @@ public class ColorButtonBehaviour : MonoBehaviour
 {
     string color;
     Material material;
+    Texture texture;
 
     public delegate void OnClickHandler(string color);
     public static event OnClickHandler OnColorButtonClick;
@@ -27,7 +28,14 @@ public class ColorButtonBehaviour : MonoBehaviour
     public void SetMaterial(Material newMaterial)
     {
         material = newMaterial;
-        Image image = gameObject.GetComponent<Image>();
+        RawImage image = gameObject.GetComponent<RawImage>();
         image.color = material.GetColor("_Color");
+    }
+
+    public void SetTexture(Texture newTexture)
+    {
+        texture = newTexture;
+        RawImage image = gameObject.GetComponent<RawImage>();
+        image.texture = texture;
     }
 }

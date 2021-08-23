@@ -12,10 +12,16 @@ public class ColorButtonManager : MonoBehaviour
     {
         ColorButtonBehaviour.OnColorButtonClick += HandleColorButtonClick;
         GameStateManager.OnGameStateChanged += HandleGameStateChange;
+        MainMenuManager.OnPlayerPrefChanged += CopyColorBalls;
         buttonBehaviours = new List<ColorButtonBehaviour>(transform.GetComponentsInChildren<ColorButtonBehaviour>());
     }
 
     void Start()
+    {
+        CopyColorBalls();
+    }
+
+    void CopyColorBalls()
     {
         colorBalls = ColorBallManager.Instance.GetPossibleColorBalls();
     }
@@ -64,12 +70,20 @@ public class ColorButtonManager : MonoBehaviour
         wrongButtons.RemoveAt(correctIndex);
         correctButton.SetColor(frontBall.GetColor());
         correctButton.SetMaterial(frontBall.GetMaterial());
+        if (PlayerPrefs.GetInt("DisplayShapes", 0) == 1)
+        {
+            correctButton.SetTexture(frontBall.GetTexture());
+        }
         RemoveMatchingColorBalls(frontBall.GetColor(), remainingColorBalls); // ensure that we don't accidentally make two "correct" buttons
         foreach (ColorButtonBehaviour button in wrongButtons)
         {
             int i = Random.Range(0, remainingColorBalls.Count);
             button.SetColor(remainingColorBalls[i].GetColor());
             button.SetMaterial(remainingColorBalls[i].GetMaterial());
+            if (PlayerPrefs.GetInt("DisplayShapes", 0) == 1)
+            {
+                button.SetTexture(remainingColorBalls[i].GetTexture());
+            }
             remainingColorBalls.RemoveAt(i);
         }
         assigned = true;

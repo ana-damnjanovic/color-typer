@@ -15,7 +15,17 @@ public class DataLoader
         {
             string colorPath = "Materials/Ball Materials/" + data.GetColor() + "Material";
             Material material = Resources.Load(colorPath, typeof(Material)) as Material;
-            ColorBall colorBall = new ColorBall(data.GetColor(), data.GetInitialSpeed(), material);
+            string texturePath = "Textures/" + data.GetShape();
+            Texture texture = Resources.Load(texturePath, typeof(Texture)) as Texture;
+            if (PlayerPrefs.GetInt("DisplayShapes", 0) == 1)
+            {
+                material.SetTexture("_MainTex", texture);
+            }
+            else
+            {
+                material.SetTexture("_MainTex", null);
+            }
+            ColorBall colorBall = new ColorBall(data.GetColor(), data.GetInitialSpeed(), material, texture);
             colorBalls.Add(colorBall);
         }
         return colorBalls;
