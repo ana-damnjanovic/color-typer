@@ -62,6 +62,7 @@ public class ScoreManager : MonoBehaviour
         if (newState == gameState.GAME_OVER)
         {
             loader.SaveHighScore(highScoreData);
+            scoreMultiplier = 1;
             score = 0;
             OnScoreChanged(0);
         }
